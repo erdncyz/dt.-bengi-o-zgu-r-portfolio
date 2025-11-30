@@ -6,6 +6,7 @@ import DualLife from './components/DualLife';
 import DiabetesJourney from './components/DiabetesJourney';
 import Advocacy from './components/Advocacy';
 import Footer from './components/Footer';
+import GameApp from './game/GameApp';
 
 // --- YOUR IMAGES ---
 // Replace these URLs with the actual links to the images you uploaded.
@@ -27,6 +28,7 @@ const IMAGES = {
 
 const App: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showGame, setShowGame] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +42,10 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  if (showGame) {
+    return <GameApp onBack={() => setShowGame(false)} />;
+  }
+
   return (
     <div className="relative min-h-screen bg-background">
       {/* Scroll Progress Bar */}
@@ -48,7 +54,7 @@ const App: React.FC = () => {
         className="fixed top-0 left-0 right-0 h-1 bg-sugar z-50 origin-left transition-transform duration-100 ease-out"
       />
 
-      <Navbar />
+      <Navbar onPlayClick={() => setShowGame(true)} />
 
       <main>
         <Hero image={IMAGES.dentistProfile} />

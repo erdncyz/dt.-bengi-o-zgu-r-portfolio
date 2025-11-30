@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Instagram } from 'lucide-react';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onPlayClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onPlayClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -24,26 +28,33 @@ const Navbar: React.FC = () => {
     <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? 'bg-background/80 backdrop-blur-xl border-b border-primary/5 py-4' : 'bg-transparent py-8'}`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          
+
           <a href="#" className="text-xl tracking-tighter font-serif font-bold text-primary z-50">
             DT. BENGİ
           </a>
-          
+
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
+              <a
+                key={link.name}
+                href={link.href}
                 className="text-sm font-medium uppercase tracking-widest text-secondary hover:text-sugar transition-colors relative group"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sugar transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
-            <a 
-              href="https://www.instagram.com/bengiiozgur/" 
-              target="_blank" 
+            <button
+              onClick={onPlayClick}
+              className="text-sm font-medium uppercase tracking-widest text-secondary hover:text-sugar transition-colors relative group"
+            >
+              Oyun
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sugar transition-all duration-300 group-hover:w-full"></span>
+            </button>
+            <a
+              href="https://www.instagram.com/bengiiozgur/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:text-sugar transition-colors"
             >
@@ -52,7 +63,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden z-50 text-primary p-2"
           >
@@ -74,6 +85,12 @@ const Navbar: React.FC = () => {
               {link.name}
             </a>
           ))}
+          <button
+            onClick={() => { setIsOpen(false); onPlayClick(); }}
+            className="text-3xl font-serif text-primary hover:text-sugar transition-colors"
+          >
+            Oyun
+          </button>
           <a
             href="https://www.instagram.com/bengiiozgur/"
             target="_blank"
