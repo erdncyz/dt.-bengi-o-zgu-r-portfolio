@@ -9,6 +9,7 @@
   <meta name="color-scheme" content="dark light" />
   <meta name="description" content="Dt. Bengi Özgür — Malatya'da diş hekimi, sporcu ve Tip 1 diyabet savunucusu. Klinik hassasiyet, saha mücadelesi, irade." />
   <title>Dt. Bengi Özgür | Diş Hekimi &amp; Sporcu</title>
+  <link rel="preload" as="image" href="/dentist-bengi.jpg" fetchpriority="high" />
   <script>
     (function () {
       try {
@@ -20,226 +21,9 @@
       } catch (e) {}
     })();
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            background: 'rgb(var(--c-bg) / <alpha-value>)',
-            surface: 'rgb(var(--c-surface) / <alpha-value>)',
-            primary: 'rgb(var(--c-primary) / <alpha-value>)',
-            secondary: 'rgb(var(--c-secondary) / <alpha-value>)',
-            subtle: 'rgb(var(--c-subtle) / <alpha-value>)',
-            accent: 'rgb(var(--c-accent) / <alpha-value>)',
-            sugar: 'rgb(var(--c-sugar) / <alpha-value>)',
-            muted: 'rgb(var(--c-muted) / <alpha-value>)',
-            border: 'rgb(var(--c-border) / <alpha-value>)',
-            inverse: 'rgb(var(--c-inverse) / <alpha-value>)',
-            on: 'rgb(var(--c-on) / <alpha-value>)',
-            footer: 'rgb(var(--c-footer) / <alpha-value>)',
-          },
-          fontFamily: {
-            sans: ['Figtree', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            display: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
-            serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
-          },
-          maxWidth: {
-            page: '1400px',
-          },
-          boxShadow: {
-            soft: 'var(--shadow-soft)',
-            lift: 'var(--shadow-lift)',
-            glow: 'var(--shadow-glow)',
-          },
-          transitionTimingFunction: {
-            out: 'cubic-bezier(0.16, 1, 0.3, 1)',
-          },
-        }
-      }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap"
-    rel="stylesheet">
   <style>
-    :root {
-      color-scheme: light;
-      --c-bg: 244 246 248;
-      --c-surface: 255 255 255;
-      --c-primary: 28 25 23;
-      --c-secondary: 68 64 60;
-      --c-subtle: 87 83 78;
-      --c-accent: 161 98 7;
-      --c-sugar: 180 35 24;
-      --c-muted: 232 236 240;
-      --c-border: 214 211 209;
-      --c-inverse: 28 25 23;
-      --c-on: 255 255 255;
-      --c-footer: 28 25 23;
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --shadow-soft: 0 8px 24px rgba(28, 25, 23, 0.06);
-      --shadow-lift: 0 18px 44px rgba(28, 25, 23, 0.10);
-      --shadow-glow: 0 12px 36px rgba(180, 35, 24, 0.18);
-    }
-
-    html.dark {
-      color-scheme: dark;
-      --c-bg: 5 5 6;
-      --c-surface: 10 10 12;
-      --c-primary: 237 237 239;
-      --c-secondary: 176 176 184;
-      --c-subtle: 138 143 152;
-      --c-accent: 232 184 109;
-      --c-sugar: 251 113 133;
-      --c-muted: 22 22 26;
-      --c-border: 48 48 54;
-      --c-inverse: 237 237 239;
-      --c-on: 10 10 12;
-      --c-footer: 10 10 12;
-      --shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.45);
-      --shadow-lift: 0 24px 60px rgba(0, 0, 0, 0.55);
-      --shadow-glow: 0 12px 40px rgba(232, 184, 109, 0.22);
-    }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
-      background: rgb(var(--c-bg));
-      color: rgb(var(--c-primary));
-      touch-action: manipulation;
-      overscroll-behavior-y: contain;
-      overflow-x: clip;
-      transition: background-color 400ms var(--ease-out), color 400ms var(--ease-out);
-    }
-
-    h1, h2, h3, h4, .font-display {
-      font-family: 'Fraunces', ui-serif, Georgia, serif;
-      font-optical-sizing: auto;
-    }
-
-    :focus-visible {
-      outline: 2px solid rgb(var(--c-accent));
-      outline-offset: 3px;
-    }
-
-    .skip-link {
-      position: absolute;
-      left: 1rem;
-      top: -100px;
-      z-index: 100;
-      padding: 0.75rem 1rem;
-      background: rgb(var(--c-inverse));
-      color: rgb(var(--c-on));
-      border-radius: 999px;
-      font-size: 0.875rem;
-      font-weight: 600;
-    }
-
-    .skip-link:focus {
-      top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
-    }
-
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-    #about,
-    #dual-life,
-    #diabetes,
-    #advocacy {
-      scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 5.75rem);
-    }
-
-    .hero-pin {
-      position: relative;
-      height: 100vh;
-      height: 100dvh;
-      min-height: 100vh;
-    }
-
-    .hero-stage {
-      position: relative;
-      height: 100%;
-      min-height: 100vh;
-      min-height: 100dvh;
-      overflow: hidden;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero-pin {
-        height: 100vh;
-        height: 100dvh;
-      }
-      .hero-stage {
-        position: relative;
-        height: 100%;
-      }
-    }
-
-    .glucose-path {
-      stroke-dasharray: 8 14;
-      animation: glucose-flow 18s linear infinite;
-    }
-
-    @keyframes glucose-flow {
-      to { stroke-dashoffset: -220; }
-    }
-
-    .ambient {
-      display: none;
-    }
-
-    html.dark .ambient {
-      display: block;
-      position: fixed;
-      inset: auto;
-      pointer-events: none;
-      z-index: 0;
-      border-radius: 999px;
-      filter: blur(90px);
-      opacity: 0.14;
-      animation: drift 22s var(--ease-out) infinite alternate;
-    }
-
-    .ambient-a {
-      top: -8rem;
-      right: -6rem;
-      width: 22rem;
-      height: 22rem;
-      background: rgb(var(--c-accent));
-    }
-
-    .ambient-b {
-      bottom: 10%;
-      left: -8rem;
-      width: 18rem;
-      height: 18rem;
-      background: rgb(var(--c-sugar));
-      animation-delay: -8s;
-      opacity: 0.08;
-    }
-
-    @keyframes drift {
-      to { transform: translate3d(24px, 18px, 0) scale(1.08); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .glucose-path, .ambient { animation: none; }
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
+    html, body { margin: 0; background: #050506; color: #EDEDEF; }
+    html:not(.dark), html:not(.dark) body { background: #F4F6F8; color: #1C1917; }
   </style>
 </head>
 
@@ -247,7 +31,9 @@
   <a class="skip-link" href="#main">İçeriğe geç</a>
   <div class="ambient ambient-a" aria-hidden="true"></div>
   <div class="ambient ambient-b" aria-hidden="true"></div>
-  <div id="root"></div>
+  <div id="root">
+    <div class="boot">Dt. Bengi Özgür</div>
+  </div>
   <script type="module" src="/index.tsx"></script>
 </body>
 

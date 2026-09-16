@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import { ThemeProvider } from './components/ThemeProvider';
 import Navbar from './components/Navbar';
@@ -8,7 +8,8 @@ import DualLife from './components/DualLife';
 import DiabetesJourney from './components/DiabetesJourney';
 import Advocacy from './components/Advocacy';
 import Footer from './components/Footer';
-import GameApp from './game/GameApp';
+
+const GameApp = lazy(() => import('./game/GameApp'));
 
 const IMAGES = {
   dentistProfile: '/dentist-bengi.jpg',
@@ -31,7 +32,9 @@ const App: React.FC = () => {
     return (
       <ThemeProvider>
         <MotionConfig reducedMotion="user">
-          <GameApp onBack={() => setShowGame(false)} />
+          <Suspense fallback={<div className="min-h-screen bg-background" />}>
+            <GameApp onBack={() => setShowGame(false)} />
+          </Suspense>
         </MotionConfig>
       </ThemeProvider>
     );
