@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
+import Reveal from './Reveal';
 
 interface FadeInProps {
   children: ReactNode;
@@ -7,49 +8,10 @@ interface FadeInProps {
   className?: string;
 }
 
-const FadeIn: React.FC<FadeInProps> = ({ children, delay = 0, direction = 'up', className = '' }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const domRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (domRef.current) observer.unobserve(domRef.current);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    const currentRef = domRef.current;
-    if (currentRef) observer.observe(currentRef);
-
-    return () => {
-      if (currentRef) observer.unobserve(currentRef);
-    };
-  }, []);
-
-  const getTransform = () => {
-    if (!isVisible) {
-      switch (direction) {
-        case 'up': return 'translate-y-10';
-        case 'left': return '-translate-x-10';
-        case 'right': return 'translate-x-10';
-        default: return '';
-      }
-    }
-    return 'translate-y-0 translate-x-0';
-  };
-
-  return (
-    <div
-      ref={domRef}
-      className={`transition-all duration-1000 ease-out ${getTransform()} ${isVisible ? 'opacity-100' : 'opacity-0'} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
+const FadeIn: React.FC<FadeInProps> = ({ children, delay = 0, direction = 'up', className = '' }) => (
+  <Reveal delay={delay / 1000} direction={direction === 'none' ? 'up' : direction} className={className}>
+    {children}
+  </Reveal>
+);
 
 export default FadeIn;

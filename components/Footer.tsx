@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, ArrowUp } from 'lucide-react';
+import { ArrowUp, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -7,41 +7,40 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-primary text-white py-20">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-12 border-b border-white/10 pb-12">
-            <div>
-                <h3 className="text-4xl font-serif mb-4">Dt. Bengi Özgür</h3>
-                <p className="text-white/60 max-w-sm font-light">
-                    Malatya'da yaşayan Diş Hekimi, Sporcu ve Diyabet savunucusu. İrade ve tutkunun birleştiği nokta.
-                </p>
-            </div>
-            
-            <a 
-              href="https://www.instagram.com/bengiiozgur/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group flex items-center gap-4 text-white hover:text-sugar transition-colors"
-            >
-              <span className="text-lg font-serif italic">Instagram</span>
-              <div className="p-3 bg-white/10 rounded-full group-hover:bg-sugar group-hover:text-white transition-colors">
-                  <Instagram size={20} />
-              </div>
-            </a>
+    <footer className="bg-footer text-white" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      <div className="mx-auto max-w-page px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="flex flex-col gap-10 border-b border-white/10 pb-12 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="font-serif text-3xl sm:text-4xl">Dt. Bengi Özgür</h2>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70 sm:text-base">
+              Malatya’da yaşayan diş hekimi, sporcu ve diyabet savunucusu. İrade ve tutkunun kesiştiği nokta.
+            </p>
+          </div>
+
+          <a
+            href="https://www.instagram.com/bengiiozgur/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex min-h-12 items-center gap-4 text-white transition-colors duration-200 hover:text-white cursor-pointer"
+          >
+            <span className="font-serif text-lg italic">Instagram</span>
+            <span className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/10 transition-colors duration-200 group-hover:bg-sugar">
+              <Instagram size={18} />
+            </span>
+          </a>
         </div>
 
-        <div className="flex justify-between items-center">
-          <p className="text-white/40 text-xs tracking-widest uppercase">
-            &copy; {new Date().getFullYear()} Tüm hakları saklıdır.
+        <div className="flex flex-col-reverse items-start justify-between gap-6 pt-8 sm:flex-row sm:items-center">
+          <p className="text-xs uppercase tracking-[0.16em] text-white/45">
+            © {new Date().getFullYear()} Tüm hakları saklıdır.
           </p>
-          
-          <button 
+          <button
+            type="button"
             onClick={scrollToTop}
-            className="p-4 bg-white/5 rounded-full hover:bg-white/20 transition-colors text-white"
-            aria-label="Yukarı çık"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors duration-200 hover:bg-white/20 cursor-pointer"
+            aria-label="Sayfanın başına dön"
           >
-            <ArrowUp size={20} />
+            <ArrowUp size={18} />
           </button>
         </div>
       </div>

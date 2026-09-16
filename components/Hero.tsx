@@ -1,75 +1,149 @@
-import React from 'react';
-import { ArrowDown } from 'lucide-react';
-import FadeIn from './ui/FadeIn';
+import React, { useRef } from 'react';
+import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { ArrowDown, MapPin } from 'lucide-react';
+import MagneticButton from './ui/MagneticButton';
+import { useTheme } from './ThemeProvider';
+import { EASE_OUT } from './ui/motion';
 
 interface HeroProps {
   image: string;
 }
 
+const roles = ['Diş Hekimi', 'Sporcu', 'Tip 1 Savunucusu'];
+
 const Hero: React.FC<HeroProps> = ({ image }) => {
+  const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+
+  const imgOpacity = useTransform(scrollYProgress, [0, 0.42, 0.78], [1, 0.45, 0]);
+  const imgScale = useTransform(scrollYProgress, [0, 0.85], [1.06, 1.24]);
+  const blur = useTransform(scrollYProgress, [0.28, 0.8], [0, 20]);
+  const filter = useMotionTemplate`blur(${blur}px)`;
+  const veil = useTransform(scrollYProgress, [0.22, 0.72], [0, 1]);
+  const quoteOpacity = useTransform(scrollYProgress, [0, 0.35, 0.55], [1, 0.4, 0]);
+  const titleColor = useTransform(
+    scrollYProgress,
+    [0.28, 0.68],
+    theme === 'dark' ? ['#FAFAF9', '#EDEDEF'] : ['#FFFFFF', '#1C1917']
+  );
+
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-background">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
-          
-          {/* Typography Side */}
-          <div className="lg:col-span-7 z-10 py-12 lg:py-0 order-2 lg:order-1">
-            <FadeIn delay={100}>
-              <div className="inline-flex items-center space-x-2 mb-8">
-                <span className="w-12 h-[1px] bg-primary"></span>
-                <span className="text-sm tracking-[0.2em] uppercase font-medium text-secondary">Malatya</span>
-              </div>
-            </FadeIn>
-            
-            <FadeIn delay={200}>
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-serif text-primary leading-[0.9] mb-8">
-                Dt. Bengi <br/>
-                <span className="italic text-secondary">Özgür</span>
-              </h1>
-            </FadeIn>
-            
-            <FadeIn delay={300}>
-              <p className="text-xl text-secondary max-w-lg font-light leading-relaxed mb-10">
-                Klinikte hassas bir hekim, sahada mücadeleci bir sporcu. <br/>
-                <strong className="font-medium text-primary">Tip 1 Diyabet</strong> ile sınırları yeniden tanımlayan bir irade öyküsü.
-              </p>
-            </FadeIn>
+    <section
+      ref={ref}
+      className={reduceMotion ? 'relative min-h-svh bg-background' : 'relative h-[175svh] bg-background lg:h-[210vh]'}
+    >
+      <div className={reduceMotion ? 'relative min-h-svh overflow-hidden' : 'sticky top-0 h-svh overflow-hidden'}>
+        {reduceMotion ? (
+          <img
+            src={image}
+            alt="Dt. Bengi Özgür klinik çalışırken"
+            className="absolute inset-0 h-full w-full object-cover object-[center_18%]"
+          />
+        ) : (
+          <motion.img
+            src={image}
+            alt="Dt. Bengi Özgür klinik çalışırken"
+            style={{ opacity: imgOpacity, scale: imgScale, filter }}
+            className="absolute inset-0 h-full w-full object-cover object-[center_18%] will-change-transform"
+            fetchPriority="high"
+          />
+        )}
 
-            <FadeIn delay={400}>
-              <div className="flex flex-wrap gap-4">
-                <a href="#about" className="group flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-full transition-all hover:bg-sugar hover:scale-105">
-                  <span>Hikayeyi Keşfet</span>
-                  <ArrowDown size={18} className="group-hover:translate-y-1 transition-transform" />
-                </a>
-              </div>
-            </FadeIn>
-          </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
+        {!reduceMotion && (
+          <motion.div style={{ opacity: veil }} className="absolute inset-0 bg-background" />
+        )}
 
-          {/* Image Side - Modern Card */}
-          <div className="lg:col-span-5 h-full relative order-1 lg:order-2 mb-8 lg:mb-0">
-             <FadeIn direction="left" delay={500} className="h-full">
-              <div className="relative h-[60vh] lg:h-[80vh] w-full rounded-[2rem] overflow-hidden shadow-2xl">
-                <img 
-                  src={image} 
-                  alt="Dt. Bengi Özgür Working" 
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                
-                {/* Floating Badge */}
-                <div className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl text-white max-w-[200px]">
-                  <p className="font-serif text-2xl italic">"Engel Yok."</p>
-                </div>
-              </div>
-             </FadeIn>
-          </div>
+        <div className="relative z-10 mx-auto flex h-full max-w-page flex-col justify-end px-4 pb-10 pt-[calc(env(safe-area-inset-top)+5.5rem)] sm:px-6 lg:justify-center lg:px-8 lg:pb-20">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.15 }}
+            className={`mb-5 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] sm:text-sm ${reduceMotion ? 'text-white' : ''}`}
+            style={{ color: reduceMotion ? undefined : titleColor }}
+          >
+            <span className="h-px w-8 bg-current sm:w-12" />
+            <MapPin size={14} aria-hidden="true" />
+            Malatya
+          </motion.p>
 
+          <motion.h1
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.22 }}
+            style={{ color: reduceMotion ? undefined : titleColor }}
+            className={`font-serif text-[clamp(2.6rem,10.5vw,7.5rem)] font-semibold leading-[0.88] tracking-tight ${reduceMotion ? 'text-white' : ''}`}
+          >
+            Dt. Bengi
+            <br />
+            <span className="italic font-normal">Özgür</span>
+          </motion.h1>
+
+          <motion.ul
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.38 }}
+            style={reduceMotion ? undefined : { opacity: quoteOpacity }}
+            className="mt-5 flex flex-wrap gap-2"
+            aria-label="Roller"
+          >
+            {roles.map((role) => (
+              <li
+                key={role}
+                className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-md"
+              >
+                {role}
+              </li>
+            ))}
+          </motion.ul>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.48 }}
+            className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
+            <MagneticButton href="#about">
+              <span>Hikayeyi keşfet</span>
+              <ArrowDown size={16} className="transition-transform duration-200 group-hover:translate-y-0.5" />
+            </MagneticButton>
+            <a
+              href="https://www.instagram.com/bengiiozgur/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-inverse/40 bg-background/40 px-6 text-sm font-semibold text-primary backdrop-blur-md transition-colors duration-200 hover:border-accent hover:text-accent cursor-pointer"
+            >
+              Instagram
+            </a>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.58 }}
+            className="mt-6 hidden max-w-lg text-base leading-relaxed text-white/85 sm:mt-8 sm:block sm:text-lg"
+            style={reduceMotion ? undefined : { opacity: quoteOpacity }}
+          >
+            Klinikte hassas bir hekim, sahada mücadeleci bir sporcu.
+            <span className="mt-1 block font-medium text-white">
+              Tip 1 diyabet ile sınırları yeniden tanımlayan bir irade öyküsü.
+            </span>
+          </motion.p>
+
+          {!reduceMotion && (
+            <motion.p
+              style={{ opacity: quoteOpacity }}
+              className="pointer-events-none absolute right-6 top-[28%] hidden font-serif text-3xl italic text-white/90 lg:block xl:right-16 xl:text-4xl"
+            >
+              “Engel yok.”
+            </motion.p>
+          )}
         </div>
-      </div>
-      
-      {/* Decorative Background Text */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-serif font-black text-secondary/5 whitespace-nowrap -z-10 pointer-events-none select-none">
-        BENGİ
       </div>
     </section>
   );

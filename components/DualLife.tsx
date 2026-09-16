@@ -1,5 +1,8 @@
-import React from 'react';
-import FadeIn from './ui/FadeIn';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import Reveal, { RevealChild, RevealGroup } from './ui/Reveal';
+import DissolveImage from './ui/DissolveImage';
+import { viewportOnce } from './ui/motion';
 
 interface DualLifeProps {
   bootsImage: string;
@@ -7,76 +10,97 @@ interface DualLifeProps {
 }
 
 const DualLife: React.FC<DualLifeProps> = ({ bootsImage, lockerImage }) => {
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sceneRef,
+    offset: ['start end', 'end start'],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], reduceMotion ? ['0%', '0%'] : ['-12%', '12%']);
+  const imageScale = useTransform(scrollYProgress, [0, 1], reduceMotion ? [1, 1] : [1.18, 1]);
+  const imageOpacity = useTransform(scrollYProgress, [0.08, 0.35, 0.82], [0.2, 1, 0]);
+  const copyOpacity = useTransform(scrollYProgress, [0.12, 0.36, 0.72], [0, 1, 0]);
+
   return (
     <section id="dual-life" className="bg-background">
-      
-      {/* 1. Full Width Locker Room Parallax */}
-      <div className="relative h-[60vh] lg:h-[80vh] w-full overflow-hidden">
-        <div 
-            className="absolute inset-0 bg-cover bg-center bg-fixed"
-            style={{ backgroundImage: `url(${lockerImage})` }}
+      <div ref={sceneRef} className="relative h-[62svh] overflow-hidden sm:h-[70svh] lg:h-[86vh]">
+        <motion.img
+          src={lockerImage}
+          alt="Malatya Bayanlar Spor Kulübü soyunma odası"
+          style={{
+            y: imageY,
+            scale: imageScale,
+            opacity: reduceMotion ? 1 : imageOpacity,
+          }}
+          className="absolute inset-0 h-[130%] w-full object-cover will-change-transform"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+        <motion.div
+          style={{ opacity: reduceMotion ? 1 : copyOpacity }}
+          className="absolute inset-0 flex items-center justify-center px-4 text-center"
         >
-             <div className="absolute inset-0 bg-black/60"></div>
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center text-center px-4">
-            <FadeIn>
-                <h2 className="text-5xl lg:text-7xl font-serif text-white mb-6">Takım Ruhu</h2>
-                <p className="text-white/80 text-xl max-w-2xl mx-auto font-light">
-                    Malatya Bayanlar Spor Kulübü'nde geçen yıllar, soyunma odasındaki dostluklar ve sahada verilen omuz omuza mücadele.
-                </p>
-            </FadeIn>
-        </div>
+          <Reveal className="max-w-2xl">
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-white/70">Saha</p>
+            <h2 className="font-serif text-[clamp(2.4rem,7vw,4.5rem)] text-white">Takım ruhu</h2>
+            <p className="mt-5 text-base font-normal leading-relaxed text-white/85 sm:text-lg">
+              Malatya Bayanlar Spor Kulübü’nde geçen yıllar, soyunma odasındaki dostluklar ve sahada verilen omuz omuza
+              mücadele.
+            </p>
+          </Reveal>
+        </motion.div>
       </div>
 
-      {/* 2. Detail Section with Boots */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-5">
-                <FadeIn direction="left">
-                    <div className="relative aspect-[4/5] rounded-none lg:rounded-[2rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700">
-                        <img 
-                            src={bootsImage} 
-                            alt="Hanging Football Boots" 
-                            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                        />
-                        <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-6 shadow-lg border-l-4 border-sugar">
-                            <p className="font-serif italic text-primary text-lg">
-                                "Şekerim düşer mi korkusuyla kenarda beklemedim. Oyunun içinde kaldım."
-                            </p>
-                        </div>
-                    </div>
-                </FadeIn>
+      <div className="mx-auto grid max-w-page grid-cols-1 items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8 lg:py-28">
+        <motion.div
+          className="lg:col-span-5"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="relative overflow-hidden rounded-[1.5rem] shadow-lift lg:rounded-[2rem]">
+            <DissolveImage
+              src={bootsImage}
+              alt="Askıdaki futbol kramponları"
+              className="aspect-[4/5] w-full"
+            />
+            <div className="absolute inset-x-4 bottom-4 rounded-2xl border-l-4 border-sugar bg-surface/95 p-5 shadow-soft backdrop-blur-sm sm:inset-x-6 sm:bottom-6 sm:p-6">
+              <p className="font-serif text-base italic leading-relaxed text-primary sm:text-lg">
+                “Şekerim düşer mi korkusuyla kenarda beklemedim. Oyunun içinde kaldım.”
+              </p>
             </div>
+          </div>
+        </motion.div>
 
-            <div className="lg:col-span-1 hidden lg:block"></div>
-
-            <div className="lg:col-span-6">
-                <FadeIn delay={200}>
-                    <div className="flex items-center space-x-4 mb-8">
-                         <span className="text-6xl font-serif text-primary/10 font-bold">10</span>
-                         <span className="text-sm font-bold tracking-widest uppercase text-primary">Numara Mücadele</span>
-                    </div>
-                    
-                    <h3 className="text-4xl font-serif text-primary mb-6">
-                        Yarı Profesyonel Tutku
-                    </h3>
-                    
-                    <div className="prose prose-lg text-secondary font-light">
-                        <p className="mb-6">
-                            Futbol onun için bir hobi değil, bir yaşam biçimidir. Teknik direktörü Mikail Tutuk'un da övgüyle bahsettiği o mücadeleci ruh, sahada sadece rakibe karşı değil, metabolizmasına karşı da bir zafer kazanır.
-                        </p>
-                        <p className="mb-6">
-                            Maç öncesi insülinini ayarlar, kramponlarını bağlar ve sahaya çıkar. Diyabetli bir bireyin neleri başarabileceğinin canlı kanıtıdır.
-                        </p>
-                        <div className="pl-6 border-l border-primary/20 italic text-subtle">
-                             "Ben diş hekimi de oldum, futbolcu da oldum. Siz de olabilirsiniz."
-                        </div>
-                    </div>
-                </FadeIn>
+        <RevealGroup className="lg:col-span-6 lg:col-start-7">
+          <RevealChild>
+            <div className="mb-6 flex items-baseline gap-4">
+              <span className="font-serif text-6xl font-semibold leading-none text-primary/10 sm:text-7xl">10</span>
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Numara mücadele</span>
             </div>
+            <h3 className="font-serif text-[clamp(1.85rem,4vw,2.75rem)] text-primary">Yarı profesyonel tutku</h3>
+          </RevealChild>
 
-        </div>
+          <RevealChild>
+            <div className="mt-6 space-y-5 text-base leading-relaxed text-secondary sm:text-lg">
+              <p>
+                Futbol onun için bir hobi değil, bir yaşam biçimidir. Teknik direktörü Mikail Tutuk’un da övgüyle bahsettiği
+                mücadeleci ruh, sahada yalnızca rakibe karşı değil metabolizmasına karşı da zafer kazanır.
+              </p>
+              <p>
+                Maç öncesi insülinini ayarlar, kramponlarını bağlar ve sahaya çıkar. Diyabetli bir bireyin neleri
+                başarabileceğinin canlı kanıtıdır.
+              </p>
+            </div>
+          </RevealChild>
+
+          <RevealChild>
+            <p className="mt-8 border-l-2 border-accent pl-5 font-serif text-lg italic text-secondary">
+              “Ben diş hekimi de oldum, futbolcu da oldum. Siz de olabilirsiniz.”
+            </p>
+          </RevealChild>
+        </RevealGroup>
       </div>
     </section>
   );

@@ -1,86 +1,121 @@
 import React from 'react';
-import FadeIn from './ui/FadeIn';
-import { MapPin, School } from 'lucide-react';
+import { motion } from 'motion/react';
+import { GraduationCap, MapPin, ShieldPlus, Trophy } from 'lucide-react';
+import { RevealChild, RevealGroup } from './ui/Reveal';
+import DissolveImage from './ui/DissolveImage';
+import { viewportOnce } from './ui/motion';
 
 interface AboutProps {
   image: string;
 }
 
+const facts = [
+  { icon: MapPin, title: 'Malatya', text: 'Doğum ve yaşam' },
+  { icon: GraduationCap, title: 'İnönü Üniversitesi', text: 'Diş Hekimliği Fakültesi' },
+];
+
+const strip = [
+  { label: 'Şehir', value: 'Malatya' },
+  { label: 'Meslek', value: 'Diş Hekimi' },
+  { label: 'Saha', value: 'Bayanlar SK' },
+  { label: 'Savunu', value: 'Tip 1 Diyabet' },
+];
+
 const About: React.FC<AboutProps> = ({ image }) => {
   return (
-    <section id="about" className="py-24 lg:py-32 bg-white overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          
-          <div className="relative order-2 lg:order-1">
-            <FadeIn direction="right">
-              <div className="relative">
-                {/* Image Frame */}
-                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5] z-10">
-                  <img 
-                    src={image} 
-                    alt="Bengi Özgür with child" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-                  <div className="absolute bottom-8 left-8 text-white max-w-xs">
-                     <p className="font-serif italic text-lg opacity-90">"Hayatın içinde oldukça, diyabeti yönetmeyi daha iyi öğreniyoruz."</p>
-                  </div>
-                </div>
-
-                {/* Decorative Elements */}
-                <div className="absolute -top-12 -left-12 w-full h-full border border-secondary/10 rounded-[2rem] -z-0 hidden md:block"></div>
-                <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-sugar/5 rounded-full blur-3xl -z-0"></div>
+    <section id="about" className="overflow-hidden bg-surface">
+      <div className="border-y border-border">
+        <RevealGroup className="mx-auto grid max-w-page grid-cols-2 lg:grid-cols-4">
+          {strip.map((item, index) => (
+            <RevealChild
+              key={item.label}
+              className={`border-border ${index % 2 === 0 ? 'border-r' : ''} ${
+                index < 2 ? 'border-b lg:border-b-0' : ''
+              } lg:border-r lg:last:border-r-0`}
+            >
+              <div className="flex min-h-[5.5rem] flex-col justify-center gap-1 px-4 py-5 sm:min-h-[6.5rem] sm:px-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-subtle">{item.label}</p>
+                <p className="font-serif text-lg text-primary sm:text-xl">{item.value}</p>
               </div>
-            </FadeIn>
-          </div>
+            </RevealChild>
+          ))}
+        </RevealGroup>
+      </div>
 
-          <div className="order-1 lg:order-2">
-            <FadeIn>
-              <h2 className="text-sm font-bold tracking-widest text-sugar uppercase mb-4">Malatya'nın Azimli Yüzü</h2>
-              <h3 className="text-4xl lg:text-5xl font-serif text-primary mb-8 leading-tight">
-                Şehrin Dokusuyla <br/>
-                <span className="italic text-secondary">Bütünleşmiş Bir Yaşam</span>
-              </h3>
-            </FadeIn>
-            
-            <FadeIn delay={100}>
-              <div className="space-y-6 text-lg text-secondary font-light leading-relaxed">
-                <p>
-                  Bengi Özgül, Malatyalıdır. Hayatının büyük bir bölümünü, ailesi ve sosyal çevresiyle birlikte bu şehrin sokaklarında, kampüslerinde ve sahalarında geçirmiştir.
-                </p>
-                <p>
-                  Yerel kültürü modern bir vizyonla birleştiren Özgür, İnönü Üniversitesi Diş Hekimliği Fakültesi'nden mezun olurken, aynı zamanda şehrin bayan futbol takımında ter dökmüştür.
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={200}>
-              <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-background hover:bg-sugar/5 transition-colors group">
-                  <div className="p-3 bg-white rounded-lg shadow-sm group-hover:scale-110 transition-transform">
-                    <MapPin className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-serif text-lg font-bold text-primary">Malatya</h4>
-                    <p className="text-sm text-subtle">Doğum ve Yaşam</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-background hover:bg-sugar/5 transition-colors group">
-                   <div className="p-3 bg-white rounded-lg shadow-sm group-hover:scale-110 transition-transform">
-                    <School className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-serif text-lg font-bold text-primary">İnönü Üni.</h4>
-                    <p className="text-sm text-subtle">Diş Hekimliği Fakültesi</p>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-
+      <div className="mx-auto grid max-w-page grid-cols-1 items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8 lg:py-28">
+        <div className="relative lg:col-span-5">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
+          >
+            <div className="relative z-10 aspect-[4/5] overflow-hidden rounded-[1.5rem] shadow-lift lg:rounded-[2rem]">
+              <DissolveImage src={image} alt="Bengi Özgür, bir çocukla birlikte" className="h-full w-full" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <p className="pointer-events-none absolute bottom-5 left-5 right-5 font-serif text-sm italic leading-relaxed text-white sm:bottom-6 sm:left-6 sm:right-6 sm:text-lg">
+                “Hayatın içinde oldukça, diyabeti yönetmeyi daha iyi öğreniyoruz.”
+              </p>
+            </div>
+            <div className="absolute -left-6 -top-6 hidden h-full w-full rounded-[2rem] border border-primary/10 md:block" aria-hidden="true" />
+          </motion.div>
         </div>
+
+        <RevealGroup className="lg:col-span-7">
+          <RevealChild>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-sugar">Malatya’nın azimli yüzü</p>
+            <h2 className="max-w-xl font-serif text-[clamp(1.85rem,4vw,3.15rem)] leading-tight text-primary">
+              Şehrin dokusuyla
+              <span className="block italic text-secondary">bütünleşmiş bir yaşam</span>
+            </h2>
+          </RevealChild>
+
+          <RevealChild>
+            <div className="mt-7 max-w-xl space-y-5 text-base leading-relaxed text-secondary sm:text-lg">
+              <p>
+                Bengi Özgür, Malatyalıdır. Hayatının büyük bölümünü ailesi ve sosyal çevresiyle bu şehrin sokaklarında,
+                kampüslerinde ve sahalarında geçirmiştir.
+              </p>
+              <p>
+                Yerel kültürü modern bir vizyonla birleştiren Özgür, İnönü Üniversitesi Diş Hekimliği Fakültesi’nden mezun
+                olurken şehrin bayan futbol takımında da ter dökmüştür.
+              </p>
+            </div>
+          </RevealChild>
+
+          <RevealChild>
+            <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {facts.map(({ icon: Icon, title, text }) => (
+                <div
+                  key={title}
+                  className="flex items-start gap-4 rounded-2xl bg-background p-4 transition-colors duration-200 hover:bg-muted"
+                >
+                  <div className="flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-surface shadow-soft">
+                    <Icon className="text-accent" size={20} strokeWidth={1.75} aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-lg font-semibold text-primary">{title}</h3>
+                    <p className="text-sm text-subtle">{text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </RevealChild>
+
+          <RevealChild>
+            <div className="mt-6 flex flex-wrap gap-4 text-sm text-subtle">
+              <span className="inline-flex items-center gap-2">
+                <Trophy size={16} className="text-accent" aria-hidden="true" />
+                Saha disiplini
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <ShieldPlus size={16} className="text-sugar" aria-hidden="true" />
+                Klinik hassasiyet
+              </span>
+            </div>
+          </RevealChild>
+        </RevealGroup>
       </div>
     </section>
   );

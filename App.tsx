@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { MotionConfig } from 'motion/react';
+import { ThemeProvider } from './components/ThemeProvider';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,64 +10,42 @@ import Advocacy from './components/Advocacy';
 import Footer from './components/Footer';
 import GameApp from './game/GameApp';
 
-// --- YOUR IMAGES ---
-// Replace these URLs with the actual links to the images you uploaded.
-// I have used high-quality placeholders that match your description for now.
-
 const IMAGES = {
-  // Image 3: Dentist action shot
-  dentistProfile: "/dentist-bengi.jpg",
-
-  // Image 4: Piggyback with child (Casual/Human side)
-  piggyback: "/diabetes-friend.jpg",
-
-  // Image 1: Locker room (Black & White team photo)
-  lockerRoom: "/team.jpg",
-
-  // Image 2: Hanging football boots
-  boots: "/shoes.jpg",
+  dentistProfile: '/dentist-bengi.jpg',
+  piggyback: '/diabetes-friend.jpg',
+  lockerRoom: '/team.jpg',
+  boots: '/shoes.jpg',
 };
 
 const App: React.FC = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [showGame, setShowGame] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollTop;
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scroll = windowHeight > 0 ? totalScroll / windowHeight : 0;
-      setScrollProgress(Number(scroll));
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   if (showGame) {
-    return <GameApp onBack={() => setShowGame(false)} />;
+    return (
+      <ThemeProvider>
+        <MotionConfig reducedMotion="user">
+          <GameApp onBack={() => setShowGame(false)} />
+        </MotionConfig>
+      </ThemeProvider>
+    );
   }
 
   return (
-    <div className="relative min-h-screen bg-background">
-      {/* Scroll Progress Bar */}
-      <div
-        style={{ transform: `scaleX(${scrollProgress})` }}
-        className="fixed top-0 left-0 right-0 h-1 bg-sugar z-50 origin-left transition-transform duration-100 ease-out"
-      />
-
-      <Navbar onPlayClick={() => setShowGame(true)} />
-
-      <main>
-        <Hero image={IMAGES.dentistProfile} />
-        <About image={IMAGES.piggyback} />
-        <DualLife bootsImage={IMAGES.boots} lockerImage={IMAGES.lockerRoom} />
-        <DiabetesJourney />
-        <Advocacy />
-      </main>
-
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <MotionConfig reducedMotion="user" transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}>
+        <div className="relative z-10 min-h-svh overflow-x-hidden bg-background">
+          <Navbar onPlayClick={() => setShowGame(true)} />
+          <main id="main">
+            <Hero image={IMAGES.dentistProfile} />
+            <About image={IMAGES.piggyback} />
+            <DualLife bootsImage={IMAGES.boots} lockerImage={IMAGES.lockerRoom} />
+            <DiabetesJourney />
+            <Advocacy />
+          </main>
+          <Footer />
+        </div>
+      </MotionConfig>
+    </ThemeProvider>
   );
 };
 
