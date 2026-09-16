@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import { ThemeProvider } from './components/ThemeProvider';
 import Navbar from './components/Navbar';
@@ -20,6 +20,13 @@ const IMAGES = {
 const App: React.FC = () => {
   const [showGame, setShowGame] = useState(false);
 
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
   if (showGame) {
     return (
       <ThemeProvider>
@@ -33,7 +40,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <MotionConfig reducedMotion="user" transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}>
-        <div className="relative z-10 min-h-screen overflow-x-hidden bg-background">
+        <div className="relative z-10 min-h-screen bg-background">
           <Navbar onPlayClick={() => setShowGame(true)} />
           <main id="main">
             <Hero image={IMAGES.dentistProfile} />

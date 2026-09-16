@@ -59,7 +59,7 @@ const Hero: React.FC<HeroProps> = ({ image }) => {
           <motion.div style={{ opacity: veil }} className="absolute inset-0 bg-background" />
         )}
 
-        <div className="relative z-10 mx-auto flex h-full min-h-full max-w-page flex-col justify-end px-4 pb-10 pt-[calc(env(safe-area-inset-top)+5.5rem)] sm:px-6 lg:justify-center lg:px-8 lg:pb-20">
+        <div className="relative z-10 mx-auto flex h-full min-h-full max-w-page flex-col justify-end px-4 pb-8 pt-[calc(env(safe-area-inset-top)+5.25rem)] sm:px-6 sm:pb-10 lg:justify-center lg:px-8 lg:pb-20">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,7 +77,7 @@ const Hero: React.FC<HeroProps> = ({ image }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.22 }}
             style={{ color: reduceMotion ? undefined : titleColor }}
-            className={`font-serif text-[clamp(2.6rem,10.5vw,7.5rem)] font-semibold leading-[0.88] tracking-tight ${reduceMotion ? 'text-white' : ''}`}
+            className={`font-serif text-[clamp(2.35rem,8.4vw,6.75rem)] font-semibold leading-[0.9] tracking-tight ${reduceMotion ? 'text-white' : ''}`}
           >
             Dt. Bengi
             <br />
@@ -126,7 +126,7 @@ const Hero: React.FC<HeroProps> = ({ image }) => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.58 }}
-            className="mt-6 hidden max-w-lg text-base leading-relaxed text-white/85 sm:mt-8 sm:block sm:text-lg"
+            className="mt-6 max-w-lg text-base leading-relaxed text-white/85 sm:mt-8 sm:text-lg"
             style={reduceMotion ? undefined : { opacity: quoteOpacity }}
           >
             Klinikte hassas bir hekim, sahada mücadeleci bir sporcu.
