@@ -33,7 +33,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <MotionConfig reducedMotion="user" transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}>
-        <div className="relative z-10 min-h-svh overflow-x-hidden bg-background">
+        <div className="relative z-10 min-h-screen overflow-x-hidden bg-background">
           <Navbar onPlayClick={() => setShowGame(true)} />
           <main id="main">
             <Hero image={IMAGES.dentistProfile} />

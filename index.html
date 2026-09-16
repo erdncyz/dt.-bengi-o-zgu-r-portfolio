@@ -156,6 +156,31 @@
       scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 5.75rem);
     }
 
+    .hero-pin {
+      position: relative;
+      height: 185vh;
+    }
+
+    .hero-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100dvh;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-pin {
+        height: auto;
+      }
+      .hero-stage {
+        position: relative;
+        height: 100vh;
+        height: 100dvh;
+      }
+    }
+
     .glucose-path {
       stroke-dasharray: 8 14;
       animation: glucose-flow 18s linear infinite;

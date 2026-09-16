@@ -23,7 +23,7 @@ const DualLife: React.FC<DualLifeProps> = ({ bootsImage, lockerImage }) => {
 
   return (
     <section id="dual-life" className="bg-background">
-      <div ref={sceneRef} className="relative h-[62svh] overflow-hidden sm:h-[70svh] lg:h-[86vh]">
+      <div ref={sceneRef} className="relative h-[62vh] overflow-hidden sm:h-[70vh] lg:h-[86vh]">
         <motion.img
           src={lockerImage}
           alt="Malatya Bayanlar Spor Kulübü soyunma odası"

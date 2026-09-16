@@ -35,9 +35,9 @@ const Hero: React.FC<HeroProps> = ({ image }) => {
   return (
     <section
       ref={ref}
-      className={reduceMotion ? 'relative min-h-svh bg-background' : 'relative h-[175svh] bg-background lg:h-[210vh]'}
+      className="hero-pin bg-background"
     >
-      <div className={reduceMotion ? 'relative min-h-svh overflow-hidden' : 'sticky top-0 h-svh overflow-hidden'}>
+      <div className="hero-stage">
         {reduceMotion ? (
           <img
             src={image}
@@ -59,7 +59,7 @@ const Hero: React.FC<HeroProps> = ({ image }) => {
           <motion.div style={{ opacity: veil }} className="absolute inset-0 bg-background" />
         )}
 
-        <div className="relative z-10 mx-auto flex h-full max-w-page flex-col justify-end px-4 pb-10 pt-[calc(env(safe-area-inset-top)+5.5rem)] sm:px-6 lg:justify-center lg:px-8 lg:pb-20">
+        <div className="relative z-10 mx-auto flex h-full min-h-full max-w-page flex-col justify-end px-4 pb-10 pt-[calc(env(safe-area-inset-top)+5.5rem)] sm:px-6 lg:justify-center lg:px-8 lg:pb-20">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
