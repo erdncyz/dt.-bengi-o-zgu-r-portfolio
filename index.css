@@ -126,6 +126,7 @@ h4,
 #about,
 #dual-life,
 #diabetes,
+#press,
 #advocacy {
   scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 5.75rem);
 }

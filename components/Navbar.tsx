@@ -12,6 +12,7 @@ const navLinks = [
   { name: 'Hakkımda', href: '#about' },
   { name: 'Spor & Meslek', href: '#dual-life' },
   { name: 'Diyabet', href: '#diabetes' },
+  { name: 'Basında', href: '#press' },
   { name: 'Mesajım', href: '#advocacy' },
 ];
 

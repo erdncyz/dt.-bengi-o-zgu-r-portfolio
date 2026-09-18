@@ -16,8 +16,8 @@ const Advocacy: React.FC = () => {
 
         <RevealChild>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-secondary sm:text-lg">
-            Bengi Özgür, Turgut Özal Tıp Merkezi’ndeki Diyabet Gönüllüleri etkinliklerinde ailelere sesleniyor. Tutku,
-            disiplin ve hayatın içinde kalmak; diyabeti yönetmenin en sağlam yolu.
+            Turgut Özal salonundaki Dünya Diyabet Günü’nün ardından kalan çağrı aynı: tutku, disiplin ve hayatın içinde
+            kalmak. Diyabeti yönetmenin en sağlam yolu budur.
           </p>
         </RevealChild>
       </RevealGroup>

@@ -7,6 +7,7 @@ import About from './components/About';
 import DualLife from './components/DualLife';
 import DiabetesJourney from './components/DiabetesJourney';
 import Advocacy from './components/Advocacy';
+import Press from './components/Press';
 import Footer from './components/Footer';
 
 const GameApp = lazy(() => import('./game/GameApp'));
@@ -25,7 +26,9 @@ const App: React.FC = () => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    window.scrollTo(0, 0);
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   if (showGame) {
@@ -50,6 +53,7 @@ const App: React.FC = () => {
             <About image={IMAGES.piggyback} />
             <DualLife bootsImage={IMAGES.boots} lockerImage={IMAGES.lockerRoom} />
             <DiabetesJourney />
+            <Press />
             <Advocacy />
           </main>
           <Footer />
